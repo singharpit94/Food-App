@@ -12,8 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
+import android.widget.TextView;
 
 
 /**
@@ -21,12 +20,20 @@ import android.view.MenuItem;
  */
 public class ProductList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
+     TextView t1;
+    int x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.productlist);
+        setContentView(R.layout.productadapter);
+        Intent intent = getIntent();
+        if (null != intent) {
+             x= intent.getIntExtra("type", -1);
+
+        }
+        t1=(TextView)findViewById(R.id.t1);
+        t1.setText(Integer.toString(x));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 

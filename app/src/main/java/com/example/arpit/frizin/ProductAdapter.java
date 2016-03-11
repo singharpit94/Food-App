@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -51,6 +53,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.textViewPrice.setText(stationary.getPrice().toString());
 
         holder.imageView.setImageUrl(stationary.getImgUrl(), imageLoader);
+        holder.setClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(context,"Arpit",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
 
 
 
@@ -63,11 +74,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener {
         public NetworkImageView imageView;
         public TextView textViewName;
 
         public TextView textViewPrice;
+        private ItemClickListener clickListener;
 
 
         //Initializing Views
@@ -78,12 +90,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             textViewName = (TextView) itemView.findViewById(R.id.name);
 
             textViewPrice = (TextView) itemView.findViewById(R.id.price);
+            itemView.setOnLongClickListener(this);
+
+        }
+        public void setClickListener(ItemClickListener itemClickListener) {
+            this.clickListener = itemClickListener;
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onClick(v, getPosition());
 
         }
 
         @Override
-        public void onClick(View v) {
-
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 }

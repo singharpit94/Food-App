@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         i1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                Intent myintent = new Intent(MainActivity.this, CartList.class);
                 myintent.putExtra("type", 1);
                 startActivity(myintent);
                 finish();

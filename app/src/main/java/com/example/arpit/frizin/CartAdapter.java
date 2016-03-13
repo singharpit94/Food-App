@@ -46,6 +46,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private Context context;
 
     String s=null;
+    String user="arpitsinghnitd@gmail.com";
+    int pid=0;
 
     public CartAdapter(List<CartProduct> list, Context context) {
         this.list = list;
@@ -76,7 +78,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         imageLoader.get(stationary.getImgUrl(), ImageLoader.getImageListener(holder.imageView, R.mipmap.ic_launcher, R.drawable.abc_btn_check_material));
         holder.textViewName.setText(stationary.getName());
         holder.textViewPrice.setText(stationary.getPrice().toString());
-        holder.textViewQty.setText(stationary.getQty());
+        holder.textViewQty.setText(Integer.toString(stationary.getQty()));
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,8 +105,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void removeAt(int p,int id) {
         list.remove(p);
         //  Config.cartlist.remove(p);
-        notifyItemRemoved(p);
-        notifyItemRangeChanged(p, list.size());
+       // notifyItemRemoved(p);
+        //notifyItemRangeChanged(p, list.size());
+        pid=id;
+        Toast.makeText(context,Integer.toString(id),Toast.LENGTH_LONG).show();
+        Add a=new Add();
+        a.execute();
+
     }
 
 
@@ -142,7 +149,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 
     }
-    public class AddtoCart extends AsyncTask<String, String, String> {
+    public class Add extends AsyncTask<String, String, String> {
 
         private Dialog loadingDialog;
         @Override
@@ -157,8 +164,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             // Setting the name Value Pairs.
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             // Adding the string variables inside the namevaluepairs
-           // nameValuePairs.add(new BasicNameValuePair("product_id",Integer.toString(x)));
-            //nameValuePairs.add(new BasicNameValuePair("user",user));
+            nameValuePairs.add(new BasicNameValuePair("product_id",Integer.toString(pid)));
+            nameValuePairs.add(new BasicNameValuePair("user",user));
             //nameValuePairs.add(new BasicNameValuePair("qty",Integer.toString(quantity)));
             String result =null;
             // Setting up the connection inside the try and catch block.
@@ -170,7 +177,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 //of online database and the ip address in case of local database.
                 //And the php files which serves as the link between the android app
                 //and mysql database.
-                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/addto_cart.php");
+                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/remove_cart.php");
 
                 //Passing the newValuePairs inside the httpPost.
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -225,10 +232,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             else {
                 s = result.trim();
 
-                loadingDialog.dismiss();
+                //loadingDialog.dismiss();
 
                 Toast.makeText(context, s, Toast.LENGTH_LONG).show();
-                parseData();
+              //  parseData();
             }
 
 
@@ -237,21 +244,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         }
     }
-    //This method will parse json data
-    private void parseData() {
-        JSONObject json=null;
-        try
-        {
-            json=new JSONObject(s);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
 
 
 
-    }
+
+
 
 }

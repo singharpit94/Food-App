@@ -49,8 +49,9 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    ArrayList<Product> arrayList;
+    ArrayList<CartProduct> arrayList;
     String s=null;
+    String user=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
             x = intent.getIntExtra("type", -1);
 
         }
-
+        user="arpitsinghnitd@gmail.com";
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -85,7 +86,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
         SendMessage s1=new SendMessage();
         s1.execute();
         //fun();
-        adapter=new ProductAdapter(arrayList,this);
+        adapter=new CartAdapter(arrayList,this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(null);
@@ -149,7 +150,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
             // Setting the name Value Pairs.
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             // Adding the string variables inside the namevaluepairs
-            nameValuePairs.add(new BasicNameValuePair("type",Integer.toString(x)));
+            nameValuePairs.add(new BasicNameValuePair("user",user));
             String result =null;
             // Setting up the connection inside the try and catch block.
             try {
@@ -160,7 +161,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
                 //of online database and the ip address in case of local database.
                 //And the php files which serves as the link between the android app
                 //and mysql database.
-                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/try.php");
+                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/cartlist.php");
 
                 //Passing the newValuePairs inside the httpPost.
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -236,7 +237,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
         }
         for (int i = 0; i < array.length(); i++) {
             //Creating the superhero object
-            Product stationary= new Product();
+            CartProduct stationary= new CartProduct();
             JSONObject json = null;
             try {
                 //Getting json
@@ -246,7 +247,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
                 stationary.setImgUrl(json.getString( "pimage"));
                 stationary.setName(json.getString("pname"));
                 stationary.setPrice(json.getLong("price"));
-                stationary.setDesc(json.getString("pdesc"));
+                stationary.setQty(json.getInt("quantity"));
                 stationary.setId(json.getInt("pid"));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -260,7 +261,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
     }
     void fun()
     {   long a =49;
-        Product stationary= new Product();
+        CartProduct stationary= new CartProduct();
         //Adding data to the superhero object
         stationary.setImgUrl("http://172.16.41.13/frizin/01.jpg");
         stationary.setName("Arpit");

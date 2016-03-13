@@ -62,6 +62,7 @@ public class ProductDetails extends AppCompatActivity implements NavigationView.
 
 
     String s=null;
+    String s1=null;
 
 
     @Override

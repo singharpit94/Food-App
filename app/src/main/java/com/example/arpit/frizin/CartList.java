@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,20 +39,11 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
-
-import java.io.IOException;
-import java.io.InputStream;
-
 
 /**
- * Created by arpit on 12/12/15.
+ * Created by arpit on 13/3/16.
  */
-public class ProductList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class CartList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView t1;
     int x;
     private RecyclerView recyclerView;
@@ -66,7 +55,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.productadapter);
+        setContentView(R.layout.cartadapter);
         Intent intent = getIntent();
         if (null != intent) {
             x = intent.getIntExtra("type", -1);
@@ -151,7 +140,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingDialog = ProgressDialog.show(ProductList.this, "Please wait", "Registering...");
+            loadingDialog = ProgressDialog.show(CartList.this, "Please wait", "Registering...");
         }
         @Override
         protected String doInBackground(String... params) {
@@ -211,8 +200,8 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        return result;
-    }
+            return result;
+        }
 
 
 
@@ -220,21 +209,21 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         protected void onPostExecute(String result) {
             if(result==null)
             {
-                Toast.makeText(getApplicationContext(),"DOne",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "DOne", Toast.LENGTH_LONG).show();
 
             }
-  else{             s = result.trim();
+            else{             s = result.trim();
 
-            loadingDialog.dismiss();
+                loadingDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            parseData();}
-
-
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                parseData();}
 
 
 
-           }
+
+
+        }
     }
     //This method will parse json data
     private void parseData() {
@@ -278,11 +267,10 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         stationary.setPrice(a);
         stationary.setDesc("sffdfddf");
         arrayList.add(stationary);
-       // adapter.notifyDataSetChanged();
+        // adapter.notifyDataSetChanged();
 
 
     }
 
 
 }
-

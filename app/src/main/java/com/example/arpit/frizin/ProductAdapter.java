@@ -1,6 +1,7 @@
 package com.example.arpit.frizin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         final Long price=stationary.getPrice();
         final Long[] quantity = new Long[list.size()];
         final String desc=stationary.getDesc();
+
+        final int id=stationary.getId();
+        holder.fun(id);
         Log.d("OnBind", "calling on bind");
         imageLoader = Singleton.getInstance().getImageLoader();
         imageLoader.get(stationary.getImgUrl(), ImageLoader.getImageListener(holder.imageView, R.mipmap.ic_launcher, R.drawable.abc_btn_check_material));
@@ -53,13 +57,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.textViewPrice.setText(stationary.getPrice().toString());
 
         holder.imageView.setImageUrl(stationary.getImgUrl(), imageLoader);
-        holder.setClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Toast.makeText(context,"Arpit",Toast.LENGTH_LONG).show();
 
-            }
-        });
+
 
 
 
@@ -74,12 +73,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener   {
         public NetworkImageView imageView;
         public TextView textViewName;
 
         public TextView textViewPrice;
         private ItemClickListener clickListener;
+       public int id;
 
 
         //Initializing Views
@@ -90,23 +90,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             textViewName = (TextView) itemView.findViewById(R.id.name);
 
             textViewPrice = (TextView) itemView.findViewById(R.id.price);
-            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
 
         }
-        public void setClickListener(ItemClickListener itemClickListener) {
-            this.clickListener = itemClickListener;
-        }
 
+         void  fun(int id)
+         {
+             this.id=id;
+             //Toast.makeText(context,id,Toast.LENGTH_LONG).show();
 
+         }
         @Override
         public void onClick(View v) {
-            clickListener.onClick(v, getPosition());
+            String xy=Integer.toString(this.id);
+            //Toast.makeText(context,xy,Toast.LENGTH_LONG).show();
+            Intent myintent = new Intent(context, ProductDetails.class);
+            myintent.putExtra("product_id", this.id);
+            context.startActivity(myintent);
 
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
         }
     }
 }

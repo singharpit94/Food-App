@@ -1,23 +1,25 @@
 package com.example.arpit.frizin;
 
 /**
- * Created by arpit on 11/3/16.
+ * Created by arpit on 13/3/16.
  */
-public class Product {
+public class CartProduct {
     private String imgUrl;
     private String name;
     private String desc;
     private Long price;
     private int id;
-    public Product(){
+    private int quantity;
+    public CartProduct(){
 
     }
-    public Product(String name,Long price,String desc,int id){
+    public CartProduct(String name,Long price,String desc,int id,int quantity){
         this.name=name;
         this.desc=desc;
 
         this.price=price;
         this.id=id;
+        this.quantity=quantity;
     }
 
 
@@ -57,6 +59,11 @@ public class Product {
 
     public void setId(int id) {
         this.id=id;}
+    public int getQty() {
+        return quantity;}
+
+    public void setQty(int qty) {
+        this.quantity=qty;}
 
 
 

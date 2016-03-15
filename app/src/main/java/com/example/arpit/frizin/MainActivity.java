@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-     ImageButton i1;
+     ImageButton i1,i2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar.setTitle("FRIZIN");
         i1=(ImageButton)findViewById(R.id.imageButton1);
+        i2=(ImageButton)findViewById(R.id.imageButton2);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -39,6 +40,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         i1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 1);
+                startActivity(myintent);
+                finish();
+            }
+        });
+        i2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myintent = new Intent(MainActivity.this, CartList.class);

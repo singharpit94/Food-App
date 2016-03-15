@@ -110,7 +110,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         pid=id;
         Toast.makeText(context,Integer.toString(id),Toast.LENGTH_LONG).show();
         Add a=new Add();
-        a.execute();
+        a.execute(id);
+        notifyItemRemoved(p);
+        notifyItemRangeChanged(p, list.size());
 
     }
 
@@ -149,7 +151,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 
     }
-    public class Add extends AsyncTask<String, String, String> {
+    public class Add extends AsyncTask<Integer, String, String> {
 
         private Dialog loadingDialog;
         @Override
@@ -158,13 +160,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
            // loadingDialog = ProgressDialog.show(CartAdapter.this, "Please wait", "Registering...");
         }
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Integer... params) {
             InputStream is = null;
-
+            int proid=params[0];
             // Setting the name Value Pairs.
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             // Adding the string variables inside the namevaluepairs
-            nameValuePairs.add(new BasicNameValuePair("product_id",Integer.toString(pid)));
+            nameValuePairs.add(new BasicNameValuePair("product_id",Integer.toString(proid)));
             nameValuePairs.add(new BasicNameValuePair("user",user));
             //nameValuePairs.add(new BasicNameValuePair("qty",Integer.toString(quantity)));
             String result =null;

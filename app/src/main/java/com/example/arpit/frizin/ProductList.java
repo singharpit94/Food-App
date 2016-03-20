@@ -66,18 +66,18 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.productadapter);
+        setContentView(R.layout.submit_order_adapter);
         Intent intent = getIntent();
         if (null != intent) {
             x = intent.getIntExtra("type", -1);
 
         }
 
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>();
+     //   recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+       // recyclerView.setHasFixedSize(true);
+        //layoutManager = new LinearLayoutManager(this);
+        //recyclerView.setLayoutManager(layoutManager);
+        //arrayList = new ArrayList<>();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -93,13 +93,13 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        SendMessage s1=new SendMessage();
-        s1.execute();
+       // SendMessage s1=new SendMessage();
+        //s1.execute();
         //fun();
-        adapter=new ProductAdapter(arrayList,this);
+        //adapter=new ProductAdapter(arrayList,this);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(null);
+        //recyclerView.setAdapter(adapter);
+        //recyclerView.setItemAnimator(null);
 
 
 

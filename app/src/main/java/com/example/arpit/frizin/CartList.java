@@ -72,6 +72,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setTitle("FRIZIN");
+        toolbar.setNavigationIcon(R.drawable.ic_plus);
         //  setSupportActionBar(toolbar);
 
 

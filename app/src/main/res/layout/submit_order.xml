@@ -44,7 +44,7 @@
                 android:text="Phone"
                 />
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/phoneedit"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                 android:layout_above="@+id/button"
                 android:layout_centerHorizontal="true" />
             <EditText
-                android:id="@+id/conpassword"
+                android:id="@+id/address"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
 
 
                 <Button
-                    android:id="@+id/btnRegister"
+                    android:id="@+id/btnSubmit"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -95,7 +95,7 @@
                     />
 
                 <Button
-                    android:id="@+id/btnLinkToLoginScreen"
+                    android:id="@+id/btnGoBack"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"

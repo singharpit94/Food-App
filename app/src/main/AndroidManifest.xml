@@ -41,6 +41,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CartList"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SubmitOrder"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OrderDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

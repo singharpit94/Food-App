@@ -1,36 +1,52 @@
 package com.example.arpit.frizin;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+/**
+ * Created by arpit on 26/3/16.
+ */
+public class SubmitOrder  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    EditText e1,e2,e3;
+    Button b1,b2;
+    String name,phone,address;
 
-     ImageButton i1,i2,i3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.submit_order_adapter);
+
+          e1=(EditText)findViewById(R.id.name);
+        e2=(EditText)findViewById(R.id.phoneedit);
+        e3=(EditText)findViewById(R.id.address);
+        b1=(Button)findViewById(R.id.btnSubmit);
+        b2=(Button)findViewById(R.id.btnGoBack);
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         toolbar.setTitle("FRIZIN");
-        i1=(ImageButton)findViewById(R.id.imageButton1);
-        i2=(ImageButton)findViewById(R.id.imageButton2);
-        i3=(ImageButton)findViewById(R.id.imageButton3);
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,43 +56,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        i1.setOnClickListener(new View.OnClickListener() {
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, ProductList.class);
-                myintent.putExtra("type", 1);
+
+                name=e1.getText().toString();
+                phone=e2.getText().toString();
+                address=e3.getText().toString();
+                Intent myintent = new Intent(SubmitOrder.this, OrderDetails.class);
+                myintent.putExtra("name", name);
+                myintent.putExtra("phone", phone);
+                myintent.putExtra("address", address);
+
                 startActivity(myintent);
                 finish();
             }
         });
-        i2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, CartList.class);
-                myintent.putExtra("type", 1);
-                startActivity(myintent);
-                finish();
-            }
-        });
-        i3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, SubmitOrder.class);
-                myintent.putExtra("type", 1);
-                startActivity(myintent);
-                finish();
-            }
-        });
+
+
+
+
+
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
     @Override
@@ -107,22 +112,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

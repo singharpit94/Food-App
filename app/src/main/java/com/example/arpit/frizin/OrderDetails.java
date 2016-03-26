@@ -6,19 +6,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.app.ActionBar.LayoutParams;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -41,44 +41,42 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
-
-import java.io.IOException;
-import java.io.InputStream;
-
 
 /**
- * Created by arpit on 12/12/15.
+ * Created by arpit on 26/3/16.
  */
-public class ProductList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class OrderDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView t1;
+
+    TextView t1,t2,t3;
     int x;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     ArrayList<Product> arrayList;
     String s=null;
+    String name,phone,address;
+    String user="arpitsinghnitd@gmail.com";
+    LinearLayout r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.productadapter);
+        setContentView(R.layout.orderdetails_adapter);
         Intent intent = getIntent();
         if (null != intent) {
-            x = intent.getIntExtra("type", -1);
+            name= intent.getStringExtra("name");
+            phone= intent.getStringExtra("phone");
+            address= intent.getStringExtra("address");
 
         }
-
-       recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>();
-
+         t1=(TextView)findViewById(R.id.t1);
+        t2=(TextView)findViewById(R.id.t2);
+        t3=(TextView)findViewById(R.id.t3);
+        t1.setText(name);
+        t2.setText(phone);
+        t3.setText(address);
+        r=(LinearLayout)findViewById(R.id.r1);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setTitle("FRIZIN");
@@ -93,13 +91,13 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        SendMessage s1=new SendMessage();
+         SendMessage s1=new SendMessage();
         s1.execute();
         //fun();
-        adapter=new ProductAdapter(arrayList,this);
+        //adapter=new ProductAdapter(arrayList,this);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(null);
+        //recyclerView.setAdapter(adapter);
+        //recyclerView.setItemAnimator(null);
 
 
 
@@ -151,7 +149,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingDialog = ProgressDialog.show(ProductList.this, "Please wait", "Registering...");
+            loadingDialog = ProgressDialog.show(OrderDetails.this, "Please wait", "Registering...");
         }
         @Override
         protected String doInBackground(String... params) {
@@ -160,7 +158,10 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
             // Setting the name Value Pairs.
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             // Adding the string variables inside the namevaluepairs
-            nameValuePairs.add(new BasicNameValuePair("type",Integer.toString(x)));
+            nameValuePairs.add(new BasicNameValuePair("user",user));
+            nameValuePairs.add(new BasicNameValuePair("name",name));
+            nameValuePairs.add(new BasicNameValuePair("phone",phone));
+            nameValuePairs.add(new BasicNameValuePair("address",address));
             String result =null;
             // Setting up the connection inside the try and catch block.
             try {
@@ -171,7 +172,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
                 //of online database and the ip address in case of local database.
                 //And the php files which serves as the link between the android app
                 //and mysql database.
-                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/try.php");
+                HttpPost httpPost = new HttpPost("http://172.16.41.13/frizin/order.php");
 
                 //Passing the newValuePairs inside the httpPost.
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -211,30 +212,30 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        return result;
-    }
+            return result;
+        }
 
 
 
         @Override
         protected void onPostExecute(String result) {
             if(result==null)
-            {
-                Toast.makeText(getApplicationContext(),"DOne",Toast.LENGTH_LONG).show();
+            {    loadingDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "DOne", Toast.LENGTH_LONG).show();
 
             }
-  else{             s = result.trim();
+            else{             s = result.trim();
 
-            loadingDialog.dismiss();
+                loadingDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            parseData();}
-
-
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                parseData();}
 
 
 
-           }
+
+
+        }
     }
     //This method will parse json data
     private void parseData() {
@@ -246,28 +247,28 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
             e.printStackTrace();
         }
         for (int i = 0; i < array.length(); i++) {
-            //Creating the superhero object
-            Product stationary= new Product();
+
             JSONObject json = null;
             try {
                 //Getting json
-                json = array.getJSONObject(i);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-                //Adding data to the superhero object
-                stationary.setImgUrl(json.getString( "pimage"));
-                stationary.setName(json.getString("pname"));
-                stationary.setPrice(json.getLong("price"));
-                stationary.setDesc(json.getString("pdesc"));
-                stationary.setId(json.getInt("pid"));
+                json = array.getJSONObject(i);
+                TextView product = new TextView(this);
+                product.setText(json.getString("pname"));
+                product.setLayoutParams(params);
+                r.addView(product);
+
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //Adding the superhero object to the list
-            arrayList.add(stationary);
+
         }
 
-        //Notifying the adapter that data has been added or changed
-        adapter.notifyDataSetChanged();
+
     }
     void fun()
     {   long a =49;
@@ -278,11 +279,9 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         stationary.setPrice(a);
         stationary.setDesc("sffdfddf");
         arrayList.add(stationary);
-       // adapter.notifyDataSetChanged();
+        // adapter.notifyDataSetChanged();
 
 
     }
 
-
 }
-

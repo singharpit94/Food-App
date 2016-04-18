@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-     ImageButton i1,i2,i3;
+     ImageButton i1,i2,i3,i4,i5,i6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity
         i1=(ImageButton)findViewById(R.id.imageButton1);
         i2=(ImageButton)findViewById(R.id.imageButton2);
         i3=(ImageButton)findViewById(R.id.imageButton3);
+        i4=(ImageButton)findViewById(R.id.imageButton4);
+        i5=(ImageButton)findViewById(R.id.imageButton5);
+        i6=(ImageButton)findViewById(R.id.imageButton6);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,25 +49,52 @@ public class MainActivity extends AppCompatActivity
                 Intent myintent = new Intent(MainActivity.this, ProductList.class);
                 myintent.putExtra("type", 1);
                 startActivity(myintent);
-                finish();
+
             }
         });
         i2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, CartList.class);
-                myintent.putExtra("type", 1);
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 2);
                 startActivity(myintent);
-                finish();
+
             }
         });
         i3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent = new Intent(MainActivity.this, SubmitOrder.class);
-                myintent.putExtra("type", 1);
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 3);
                 startActivity(myintent);
-                finish();
+
+            }
+        });
+        i4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 4);
+                startActivity(myintent);
+
+            }
+        });
+        i5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 5);
+                startActivity(myintent);
+
+            }
+        });
+        i6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(MainActivity.this, ProductList.class);
+                myintent.putExtra("type", 6);
+                startActivity(myintent);
+
             }
         });
     }
@@ -107,17 +137,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_cart) {
+            Intent myintent = new Intent(MainActivity.this, CartList.class);
 
-        } else if (id == R.id.nav_slideshow) {
+            startActivity(myintent);
 
-        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_orders) {
+            Intent myintent = new Intent(MainActivity.this, OrderDetails.class);
 
-        } else if (id == R.id.nav_send) {
+            startActivity(myintent);
+
+        } else if (id == R.id.nav_account) {
+
+        } else if (id == R.id.nav_logout) {
 
         }
 

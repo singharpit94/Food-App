@@ -106,10 +106,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -219,7 +216,7 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPostExecute(String result) {
             if(result==null)
-            {
+            {   loadingDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"DOne",Toast.LENGTH_LONG).show();
 
             }

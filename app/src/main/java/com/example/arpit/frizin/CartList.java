@@ -97,10 +97,7 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,8 +207,9 @@ public class CartList extends AppCompatActivity implements NavigationView.OnNavi
         @Override
         protected void onPostExecute(String result) {
             if(result==null)
-            {
+            {    loadingDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "DOne", Toast.LENGTH_LONG).show();
+
 
             }
             else{             s = result.trim();

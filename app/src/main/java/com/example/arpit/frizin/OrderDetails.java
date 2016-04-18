@@ -104,10 +104,7 @@ public class OrderDetails extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

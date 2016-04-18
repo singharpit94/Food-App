@@ -136,10 +136,7 @@ public class ProductDetails extends AppCompatActivity implements NavigationView.
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

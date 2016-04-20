@@ -135,6 +135,24 @@ public class ProductList extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_cart) {
+            Intent myintent = new Intent(ProductList.this, CartList.class);
+
+            startActivity(myintent);
+
+
+        } else if (id == R.id.nav_orders) {
+            Intent myintent = new Intent(ProductList.this, OrderDetails.class);
+
+            startActivity(myintent);
+
+        } else if (id == R.id.nav_account) {
+
+        } else if (id == R.id.nav_logout) {
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
